@@ -17,7 +17,7 @@ jobs:
 
       - name: Build via NPM
         run: |
-          npm ci && npm run build && cp -fR build/ .
+          npm ci && npm run build && cp -arf build/* .
 
       - name: Commit to build branch
         uses: stefanzweifel/git-auto-commit-action@v4
