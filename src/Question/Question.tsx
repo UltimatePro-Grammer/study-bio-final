@@ -123,6 +123,17 @@ function Question(
                             <span className="block font-semibold">
                                 "{answers.filter((a) => a.correct)[0].text}"
                             </span>
+                            {!starred && (
+                                <button
+                                    className="text-xs bg-yellow-300 rounded-md px-1.5 py-0.5 hover:shadow-sm active:shadow-inner"
+                                    onClick={() => {
+                                        setStarred(true);
+                                        addStar(id);
+                                    }}
+                                >
+                                    Star This Question For Review
+                                </button>
+                            )}
                         </p>
                     ) : null}
                 </div>
