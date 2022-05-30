@@ -8,6 +8,7 @@ function App() {
         QuestionT["description"] | null
     >(null);
     const [answers, setAnswers] = useState<QuestionT["answers"] | null>(null);
+    const [questionId, setQuestionId] = useState<QuestionT["id"] | null>(null);
     const [questionIndex, setQuestionIndex] = useState(0);
     const newQuestion = (quizSource: string, questionIndex: number) => {
         const questions: QuestionT[] =
@@ -16,9 +17,11 @@ function App() {
                 : (allQuestions as any)[quizSource];
 
         const question = questions[questionIndex];
+        console.log(question);
 
         setDescription(question.description);
         setAnswers(question.answers);
+        setQuestionId(question.id);
 
         setQuestionIndex(questionIndex + 1);
     };
@@ -47,16 +50,15 @@ function App() {
                 </select>
             </div>
 
-            {description && answers ? (
+            {description && answers && questionId ? (
                 <Question
                     description={description}
                     answers={answers}
                     questionNumber={questionIndex}
-                    starred={false}
-                    onStarredChange={(newval) => {}}
                     onNextQuestion={() =>
                         newQuestion(quizSource, questionIndex)
                     }
+                    id={questionId}
                 />
             ) : (
                 <p className="mt-4">Loading questions...</p>

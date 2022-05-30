@@ -1,30 +1,34 @@
-import React, { ChangeEvent, MouseEvent, useState } from "react";
+import React, { ChangeEvent, MouseEvent, useEffect, useState } from "react";
+import { addStar, isStarred, removeStar } from "../utils";
 
 export type QuestionT = {
     description: { images: string[]; text: string };
     answers: { text: string; correct: boolean }[];
+    id: string;
 };
 
 function Question(
     props: QuestionT & {
         questionNumber: number;
         onNextQuestion: () => void;
-        starred: boolean;
-        onStarredChange: (is: boolean) => void;
     }
 ) {
     const {
         description: { images, text },
         answers,
         questionNumber,
-        starred,
         onNextQuestion,
-        onStarredChange,
+        id,
     } = props;
 
+    const [starred, setStarred] = useState(isStarred(id));
     const [submitShown, setSubmitShown] = useState(false);
     const [correctShown, setCorrectShown] = useState(false);
     const [answer, setAnswer] = useState<number | null>(null);
+
+    useEffect(() => {
+        setStarred(isStarred(id));
+    }, [id]);
 
     const onAnswerChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (!submitShown) {
@@ -56,7 +60,15 @@ function Question(
                     viewBox="0 0 20 20"
                     height="20"
                     width="20"
-                    onClick={() => onStarredChange(!starred)}
+                    onClick={() => {
+                        if (starred) {
+                            setStarred(false);
+                            removeStar(id);
+                        } else {
+                            setStarred(true);
+                            addStar(id);
+                        }
+                    }}
                 >
                     <path
                         fill="currentColor"
