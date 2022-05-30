@@ -56,8 +56,9 @@ function App() {
                     id="starred-only"
                     onChange={(event) => {
                         if (event.target.checked) {
-                            questionBank.setStarredOnly();
+                            questionBank.setStarredOnly(true);
                         } else {
+                            questionBank.setStarredOnly(false);
                             questionBank.reload();
                         }
                         newQuestion();

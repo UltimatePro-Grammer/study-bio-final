@@ -14,9 +14,10 @@ class QuestionBank {
         this.quizSource = quizSource;
         if (quizSource === "all") {
             this.bank = Object.values(allQuestions).flat().slice(0);
-            return;
+        } else {
+            this.bank = (allQuestions as any)[quizSource].slice(0);
         }
-        this.bank = (allQuestions as any)[quizSource].slice(0);
+        this.updateStarred();
     }
     shuffleBank() {
         this.bank = shuffleArray(this.bank);
@@ -32,8 +33,8 @@ class QuestionBank {
     }
 
     starredOnly = false;
-    setStarredOnly() {
-        this.starredOnly = true;
+    setStarredOnly(newValue: boolean) {
+        this.starredOnly = newValue;
         this.updateStarred();
     }
     updateStarred() {
@@ -42,7 +43,6 @@ class QuestionBank {
         }
     }
     reload() {
-        this.starredOnly = false;
         this.load(this.quizSource);
     }
 }
