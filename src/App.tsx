@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Question, { QuestionT } from "./Question/Question";
 import allQuestions from "./questions.json";
+import { shuffleArray } from "./utils";
 
 function App() {
     const [quizSource, setQuizSource] = useState("all");
@@ -20,7 +21,7 @@ function App() {
         console.log(question);
 
         setDescription(question.description);
-        setAnswers(question.answers);
+        setAnswers(shuffleArray(question.answers));
         setQuestionId(question.id);
 
         setQuestionIndex(questionIndex + 1);
