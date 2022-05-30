@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 export function isStarred(questionId: string) {
     const starredStr = localStorage.getItem("starred");
     if (!starredStr) return false;
@@ -26,4 +28,16 @@ export function shuffleArray(originalArray: any[]) {
         array[j] = temp;
     }
     return array;
+}
+
+// run code once on mount in react 18, from https://youtu.be/HPoC-k7Rxwo?t=1339
+export function useOnMount(callback: () => void) {
+    const executedRef = useRef(false);
+    useEffect(() => {
+        if (executedRef.current) return;
+
+        callback();
+
+        executedRef.current = true;
+    }, [callback]);
 }

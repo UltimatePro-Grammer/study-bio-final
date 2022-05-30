@@ -1,4 +1,5 @@
 import React, { ChangeEvent, MouseEvent, useEffect, useState } from "react";
+import { questionBank } from "../QuestionBank";
 import { addStar, isStarred, removeStar } from "../utils";
 
 export type QuestionT = {
@@ -68,6 +69,7 @@ function Question(
                             setStarred(true);
                             addStar(id);
                         }
+                        questionBank.updateStarred();
                     }}
                 >
                     <path
