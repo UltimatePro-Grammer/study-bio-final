@@ -13,10 +13,10 @@ class QuestionBank {
     load(quizSource: string) {
         this.quizSource = quizSource;
         if (quizSource === "all") {
-            this.bank = Object.values(allQuestions).flat();
+            this.bank = Object.values(allQuestions).flat().slice(0);
             return;
         }
-        this.bank = (allQuestions as any)[quizSource];
+        this.bank = (allQuestions as any)[quizSource].slice(0);
     }
     shuffleBank() {
         this.bank = shuffleArray(this.bank);
