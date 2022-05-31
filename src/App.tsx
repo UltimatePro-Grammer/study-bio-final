@@ -67,7 +67,7 @@ function App() {
                 ></input>
                 <label
                     htmlFor="starred-only"
-                    className="ml-1.5 font-bold text-lg cursor-pointer"
+                    className="ml-1.5 font-bold text-lg cursor-pointer select-none"
                 >
                     Starred Only
                 </label>
@@ -87,7 +87,7 @@ function App() {
                 ></input>
                 <label
                     htmlFor="shuffled"
-                    className="ml-3 border px-2 py-1 rounded font-bold text-md cursor-pointer hover:text-amber-600 transition-colors peer-checked:bg-yellow-200 peer-checked:border-amber-300"
+                    className="ml-3 border px-2 py-1 rounded font-bold text-md cursor-pointer hover:text-amber-600 transition-colors peer-checked:bg-yellow-200 peer-checked:border-amber-300 select-none"
                 >
                     <svg
                         className="inline-block mt-[-2px] mr-1"
