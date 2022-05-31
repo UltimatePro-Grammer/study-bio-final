@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Question, { QuestionT } from "./Question/Question";
 import { questionBank } from "./QuestionBank";
 import { useOnMount } from "./utils";
+import allQuestions from "./questions.json";
 
 function App() {
     const [description, setDescription] = useState<
@@ -47,7 +48,11 @@ function App() {
                     }}
                 >
                     <option value="all">All</option>
-                    <option value="Cell Division">Cell Division</option>
+                    {Object.keys(allQuestions).map((key) => (
+                        <option value={key} key={key}>
+                            {key}
+                        </option>
+                    ))}
                 </select>
             </div>
 

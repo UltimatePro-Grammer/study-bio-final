@@ -95,7 +95,7 @@ function Question(
                 <img
                     src={url}
                     key={url}
-                    className="w-3/5 m-auto"
+                    className="w-3/5 m-auto mt-6"
                     alt="Question"
                 />
             ))}
@@ -103,7 +103,7 @@ function Question(
             <div className="ml-6" ref={answersRef}>
                 {answers.map((answer, index) => (
                     <div
-                        key={answer.text}
+                        key={answer.text + index}
                         className="border-t w-11/12 pl-6 py-1 flex items-center"
                     >
                         <input
