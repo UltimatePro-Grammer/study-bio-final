@@ -1,4 +1,10 @@
-import React, { ChangeEvent, MouseEvent, useEffect, useState } from "react";
+import React, {
+    ChangeEvent,
+    MouseEvent,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { questionBank } from "../QuestionBank";
 import { addStar, isStarred, removeStar } from "../utils";
 
@@ -26,9 +32,16 @@ function Question(
     const [submitShown, setSubmitShown] = useState(false);
     const [correctShown, setCorrectShown] = useState(false);
     const [answer, setAnswer] = useState<number | null>(null);
+    const answersRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setStarred(isStarred(id));
+        setSubmitShown(false);
+        setCorrectShown(false);
+
+        Array.from(answersRef.current?.querySelectorAll("input") ?? []).map(
+            (input) => (input.checked = false)
+        );
     }, [id]);
 
     const onAnswerChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -87,10 +100,10 @@ function Question(
                 />
             ))}
             <p className="ml-6 my-6">{text}</p>
-            <div className="ml-6">
+            <div className="ml-6" ref={answersRef}>
                 {answers.map((answer, index) => (
                     <div
-                        key={answer.text + index}
+                        key={answer.text}
                         className="border-t w-11/12 pl-6 py-1 flex items-center"
                     >
                         <input
