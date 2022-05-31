@@ -32,6 +32,7 @@ function Question(
     const [submitShown, setSubmitShown] = useState(false);
     const [correctShown, setCorrectShown] = useState(false);
     const [answer, setAnswer] = useState<number | null>(null);
+    const [skipCorrectShown, setSkipCorrectShown] = useState(false);
     const answersRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -44,6 +45,8 @@ function Question(
         );
     }, [id]);
 
+    const isCorrect = answers[answer ?? 0].correct;
+
     const onAnswerChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (!submitShown) {
             setSubmitShown(true);
@@ -52,7 +55,7 @@ function Question(
     };
 
     const onSubmitOrNext = (event: MouseEvent) => {
-        if (!correctShown) {
+        if (!correctShown && (skipCorrectShown ? !isCorrect : true)) {
             setCorrectShown(true);
         } else {
             setSubmitShown(false);
@@ -60,8 +63,6 @@ function Question(
             onNextQuestion();
         }
     };
-
-    const isCorrect = answers[answer ?? 0].correct;
 
     return (
         <div className="w-[40rem] border pb-4 text-lg mt-6">
@@ -154,18 +155,32 @@ function Question(
                 </div>
             ) : null}
 
-            {
+            <button
+                className="bg-lime-300 rounded-lg px-3 py-0.5 m-auto block mt-2 hover:shadow-sm transition-all border border-lime-400 active:border-lime-100 active:shadow-inner select-none"
+                style={{
+                    opacity: submitShown ? "1" : "0",
+                    visibility: submitShown ? "visible" : "hidden",
+                }}
+                onClick={onSubmitOrNext}
+            >
+                {correctShown ? "Next Question" : "Submit Answer"}
+            </button>
+
+            {correctShown && isCorrect ? (
                 <button
-                    className="bg-lime-300 rounded-lg px-3 py-0.5 m-auto block mt-2 hover:shadow-sm transition-all border border-lime-400 active:border-lime-100 active:shadow-inner select-none"
+                    className="bg-red-200 text-[0.6rem] leading-[0.85rem] rounded-lg px-2 py-0.5 m-auto block mt-4 hover:shadow-sm transition-all border border-red-300 active:border-red-100 active:shadow-inner select-none"
                     style={{
                         opacity: submitShown ? "1" : "0",
                         visibility: submitShown ? "visible" : "hidden",
                     }}
-                    onClick={onSubmitOrNext}
+                    onClick={(event) => {
+                        setSkipCorrectShown(true);
+                        onSubmitOrNext(event);
+                    }}
                 >
-                    {correctShown ? "Next Question" : "Submit Answer"}
+                    Don't Show Again
                 </button>
-            }
+            ) : null}
         </div>
     );
 }
