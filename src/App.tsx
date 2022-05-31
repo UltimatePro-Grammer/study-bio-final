@@ -105,13 +105,27 @@ function App() {
             </div>
 
             {description && answers && questionId ? (
-                <Question
-                    description={description}
-                    answers={answers}
-                    questionNumber={questionNumber}
-                    onNextQuestion={() => newQuestion()}
-                    id={questionId}
-                />
+                <>
+                    <Question
+                        description={description}
+                        answers={answers}
+                        questionNumber={questionNumber}
+                        onNextQuestion={() => newQuestion()}
+                        id={questionId}
+                    />
+                    <div className="mt-4 flex flex-col items-center w-full">
+                        <p className="block">
+                            Question {questionNumber} /{" "}
+                            {questionBank.getTotalQuestionCount()}
+                        </p>
+                        <progress
+                            max={questionBank.getTotalQuestionCount()}
+                            value={questionNumber}
+                            className="mt-1.5 text-blue-600 bg-slate-300 bg-opacity-60 border"
+                            style={{ ["--border-radius" as any]: "0.25rem" }}
+                        ></progress>
+                    </div>
+                </>
             ) : (
                 <p className="mt-4">
                     No questions available with these settings!

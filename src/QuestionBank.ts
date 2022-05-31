@@ -45,6 +45,9 @@ class QuestionBank {
     reload() {
         this.load(this.quizSource);
     }
+    getTotalQuestionCount() {
+        return this.bank.length;
+    }
 }
 
 export const questionBank = new QuestionBank();
