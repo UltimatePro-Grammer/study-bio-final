@@ -10,6 +10,8 @@ function App() {
     const [answers, setAnswers] = useState<QuestionT["answers"] | null>(null);
     const [questionId, setQuestionId] = useState<QuestionT["id"] | null>(null);
     const [questionNumber, setQuestionNumber] = useState(0);
+    const modifiedQuestionNumber =
+        ((questionNumber - 1) % questionBank.getTotalQuestionCount()) + 1;
 
     const newQuestion = () => {
         const question = questionBank.nextQuestion();
@@ -115,12 +117,12 @@ function App() {
                     />
                     <div className="mt-4 flex flex-col items-center w-full">
                         <p className="block">
-                            Question {questionNumber} /{" "}
+                            Question {modifiedQuestionNumber} /{" "}
                             {questionBank.getTotalQuestionCount()}
                         </p>
                         <progress
                             max={questionBank.getTotalQuestionCount()}
-                            value={questionNumber}
+                            value={modifiedQuestionNumber}
                             className="mt-1.5 text-blue-600 bg-slate-300 bg-opacity-60 border"
                             style={{ ["--border-radius" as any]: "0.25rem" }}
                         ></progress>
